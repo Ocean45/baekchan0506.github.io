@@ -169,6 +169,20 @@ this.ref('id');
 
 &lt;h3 id=&#34;3-数据约束&#34;&gt;&lt;a href=&#34;#3-数据约束&#34; class=&#34;headerlink&#34; title=&#34;3.数据约束&#34;&gt;&lt;/a&gt;3.数据约束&lt;/h3&gt;&lt;p&gt;(1)数据约束&lt;/p&gt;
 &lt;p&gt;主键，外键，非空，默认，唯一&lt;/p&gt;
+&lt;p&gt;(2)主键&lt;/p&gt;
+&lt;p&gt;PRIMARY KEY 写在字段类型后面&lt;/p&gt;
+&lt;p&gt;主键特征：非空且唯一&lt;/p&gt;
+&lt;p&gt;(3)主键自增&lt;/p&gt;
+&lt;p&gt;AUTO_INCREMENT 写在字段类型后面主键之前&lt;/p&gt;
+&lt;p&gt;(4)外键&lt;/p&gt;
+&lt;p&gt;从表的外键，必须在主表的主键中出现，写在创建语句的最后面&lt;/p&gt;
+&lt;p&gt;FOREIGN KEY (字段名) REFERENCES 主表名 (字段名)；&lt;/p&gt;
+&lt;p&gt;(5)非空约束&lt;/p&gt;
+&lt;p&gt;NOT NULL 写在字段类型后面&lt;/p&gt;
+&lt;p&gt;(6)默认&lt;/p&gt;
+&lt;p&gt;DEFAULT 默认值，如果默认值是字符的需要将字符加单引号&lt;/p&gt;
+&lt;p&gt;(7)唯一&lt;/p&gt;
+&lt;p&gt;UNIQUE 写在字段类型后面&lt;/p&gt;
 ::qa::lurn::qa::面向对象总结::qa::lurn::qa::http://yoursite.com/2019/10/11/面向对象总结/::qa::lurn::qa::&lt;h1 id=&#34;面向对象总结&#34;&gt;&lt;a href=&#34;#面向对象总结&#34; class=&#34;headerlink&#34; title=&#34;面向对象总结&#34;&gt;&lt;/a&gt;面向对象总结&lt;/h1&gt;&lt;h3 id=&#34;第二章-类和对象&#34;&gt;&lt;a href=&#34;#第二章-类和对象&#34; class=&#34;headerlink&#34; title=&#34;第二章  类和对象&#34;&gt;&lt;/a&gt;第二章  类和对象&lt;/h3&gt;&lt;h5 id=&#34;1-面向对象概念&#34;&gt;&lt;a href=&#34;#1-面向对象概念&#34; class=&#34;headerlink&#34; title=&#34;1.面向对象概念&#34;&gt;&lt;/a&gt;1.面向对象概念&lt;/h5&gt;&lt;p&gt;​        面向对象就是把一个项目、一个事情分成更小的项目，或者说更小的一部分，每一部分负责什么样的功能，最后再合成一个整体。&lt;/p&gt;
 &lt;h5 id=&#34;2-类的创建&#34;&gt;&lt;a href=&#34;#2-类的创建&#34; class=&#34;headerlink&#34; title=&#34;2.类的创建&#34;&gt;&lt;/a&gt;2.类的创建&lt;/h5&gt;&lt;p&gt;语法&lt;/p&gt;
 &lt;figure class=&#34;highlight java&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;gutter&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;keyword&#34;&gt;public&lt;/span&gt; &lt;span class=&#34;class&#34;&gt;&lt;span class=&#34;keyword&#34;&gt;class&lt;/span&gt; 类名&lt;/span&gt;&amp;#123;&amp;#125;;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
@@ -340,6 +354,20 @@ function dismissSearchResultModal() {
 
 <h3 id="3-数据约束"><a href="#3-数据约束" class="headerlink" title="3.数据约束"></a>3.数据约束</h3><p>(1)数据约束</p>
 <p>主键，外键，非空，默认，唯一</p>
+<p>(2)主键</p>
+<p>PRIMARY KEY 写在字段类型后面</p>
+<p>主键特征：非空且唯一</p>
+<p>(3)主键自增</p>
+<p>AUTO_INCREMENT 写在字段类型后面主键之前</p>
+<p>(4)外键</p>
+<p>从表的外键，必须在主表的主键中出现，写在创建语句的最后面</p>
+<p>FOREIGN KEY (字段名) REFERENCES 主表名 (字段名)；</p>
+<p>(5)非空约束</p>
+<p>NOT NULL 写在字段类型后面</p>
+<p>(6)默认</p>
+<p>DEFAULT 默认值，如果默认值是字符的需要将字符加单引号</p>
+<p>(7)唯一</p>
+<p>UNIQUE 写在字段类型后面</p>
 
 		</div>
 	</div>
