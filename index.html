@@ -120,7 +120,46 @@ this.field('title');
 this.field('content');
 this.ref('id');
 })
-	var postsAllText = (function () {/*::qa::lurn::qa::::qa::lurn::qa::http://yoursite.com/2019/10/22/MySQL小结/::qa::lurn::qa::&lt;h1 id=&#34;MySQL小结&#34;&gt;&lt;a href=&#34;#MySQL小结&#34; class=&#34;headerlink&#34; title=&#34;MySQL小结&#34;&gt;&lt;/a&gt;MySQL小结&lt;/h1&gt;&lt;h3 id=&#34;1-数据库的操作&#34;&gt;&lt;a href=&#34;#1-数据库的操作&#34; class=&#34;headerlink&#34; title=&#34;1.数据库的操作&#34;&gt;&lt;/a&gt;1.数据库的操作&lt;/h3&gt;&lt;p&gt;(1)创建数据库&lt;/p&gt;
+	var postsAllText = (function () {/*::qa::lurn::qa::wMySQL小结2::qa::lurn::qa::http://yoursite.com/2019/10/22/wMySQL小结2/::qa::lurn::qa::&lt;h2 id=&#34;数据的增删改查&#34;&gt;&lt;a href=&#34;#数据的增删改查&#34; class=&#34;headerlink&#34; title=&#34;数据的增删改查&#34;&gt;&lt;/a&gt;数据的增删改查&lt;/h2&gt;&lt;h3 id=&#34;1-数据插入&#34;&gt;&lt;a href=&#34;#1-数据插入&#34; class=&#34;headerlink&#34; title=&#34;1.数据插入&#34;&gt;&lt;/a&gt;1.数据插入&lt;/h3&gt;&lt;figure class=&#34;highlight plain&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;gutter&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;5&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;insert 表名(字段1,字段2...)values (值1,值2...);&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;//精简模式&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;insert 表名 values(值1,值2...);&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;//一次插入多行&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;insert into 表名(字段1,字段2...)values(值1,值2...),(值1,值2...)...;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+
+&lt;h3 id=&#34;2-数据删除&#34;&gt;&lt;a href=&#34;#2-数据删除&#34; class=&#34;headerlink&#34; title=&#34;2.数据删除&#34;&gt;&lt;/a&gt;2.数据删除&lt;/h3&gt;&lt;figure class=&#34;highlight plain&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;gutter&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;delete from 表名 where 条件;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+
+&lt;p&gt;有外键约束的先删除从表再删除主表&lt;/p&gt;
+&lt;p&gt;清空表&lt;/p&gt;
+&lt;figure class=&#34;highlight plain&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;gutter&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;truncate table 表名;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+
+&lt;p&gt;truncate 和 delete的区别&lt;/p&gt;
+&lt;p&gt;（1）truncate将清空日志，数据不可恢复&lt;/p&gt;
+&lt;p&gt;（2）truncate将重置自增列&lt;/p&gt;
+&lt;p&gt;（3）truncate不可清空有外键约束的表&lt;/p&gt;
+&lt;h3 id=&#34;3-修改语句&#34;&gt;&lt;a href=&#34;#3-修改语句&#34; class=&#34;headerlink&#34; title=&#34;3.修改语句&#34;&gt;&lt;/a&gt;3.修改语句&lt;/h3&gt;&lt;figure class=&#34;highlight plain&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;gutter&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;update 表名 set 字段1=值1,字段2=值2,...where 条件;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+
+&lt;h3 id=&#34;4-查询语句&#34;&gt;&lt;a href=&#34;#4-查询语句&#34; class=&#34;headerlink&#34; title=&#34;4.查询语句&#34;&gt;&lt;/a&gt;4.查询语句&lt;/h3&gt;&lt;p&gt;查询所有语句&lt;/p&gt;
+&lt;figure class=&#34;highlight plain&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;gutter&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;select * from 表名;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+
+&lt;p&gt;条件查询&lt;/p&gt;
+&lt;figure class=&#34;highlight plain&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;gutter&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;2&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;select 字段1,字段2...from 表名 where 条件;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;order by 字段1,字段2...limit 数字1,数字2;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+
+&lt;p&gt;使用distinct 关键词，查询不重复的记录&lt;/p&gt;
+&lt;figure class=&#34;highlight plain&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;gutter&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;select distinct 字段名 from 表名;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+
+&lt;p&gt;重命名字段&lt;/p&gt;
+&lt;p&gt;（1）使用as 关键词，进行字段重命名，都是临时的重命名，只对本次有效&lt;/p&gt;
+&lt;figure class=&#34;highlight plain&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;gutter&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;select stuname as 姓名,nation as 民族，class as 班级 from 表名;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+
+&lt;p&gt;（2）永久性重命名字段&lt;/p&gt;
+&lt;figure class=&#34;highlight plain&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;gutter&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;alter table 表名 change 旧字段名 新字段名 字段类型;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+
+&lt;h3 id=&#34;5-模糊查询&#34;&gt;&lt;a href=&#34;#5-模糊查询&#34; class=&#34;headerlink&#34; title=&#34;5.模糊查询&#34;&gt;&lt;/a&gt;5.模糊查询&lt;/h3&gt;&lt;p&gt;%表示任意长度的字符，0也是任意长度&lt;/p&gt;
+&lt;p&gt;_表示一个字符&lt;/p&gt;
+&lt;p&gt;聚合函数&lt;/p&gt;
+&lt;p&gt;求和 sum(字段)&lt;/p&gt;
+&lt;p&gt;平均数 avg(字段)&lt;/p&gt;
+&lt;p&gt;最大 max(字段)&lt;/p&gt;
+&lt;p&gt;最小 min(字段)&lt;/p&gt;
+&lt;p&gt;个数 count(字段)或count(*)&lt;/p&gt;
+&lt;p&gt;区别：count(字段)在字段为空的时候不会统计个数&lt;/p&gt;
+::qa::lurn::qa::::qa::lurn::qa::http://yoursite.com/2019/10/22/MySQL小结/::qa::lurn::qa::&lt;h1 id=&#34;MySQL小结&#34;&gt;&lt;a href=&#34;#MySQL小结&#34; class=&#34;headerlink&#34; title=&#34;MySQL小结&#34;&gt;&lt;/a&gt;MySQL小结&lt;/h1&gt;&lt;h3 id=&#34;1-数据库的操作&#34;&gt;&lt;a href=&#34;#1-数据库的操作&#34; class=&#34;headerlink&#34; title=&#34;1.数据库的操作&#34;&gt;&lt;/a&gt;1.数据库的操作&lt;/h3&gt;&lt;p&gt;(1)创建数据库&lt;/p&gt;
 &lt;p&gt;CREATE DATABASE 数据库名;&lt;/p&gt;
 &lt;figure class=&#34;highlight plain&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;gutter&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;2&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;mysql&amp;gt; CREATE DATABASE stu;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;Query OK, 1 row affected&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
 
@@ -305,9 +344,11 @@ function dismissSearchResultModal() {
 	<h2 class="center">Latest List</h2>
 	<div class="post-list">
 		
-		<p class="post-title"><a href="/2019/10/22/MySQL小结/">1. no-title</a></p>
+		<p class="post-title"><a href="/2019/10/22/wMySQL小结2/">1. wMySQL小结2</a></p>
 		
-		<p class="post-title"><a href="/2019/10/11/面向对象总结/">2. 面向对象总结</a></p>
+		<p class="post-title"><a href="/2019/10/22/MySQL小结/">2. no-title</a></p>
+		
+		<p class="post-title"><a href="/2019/10/11/面向对象总结/">3. 面向对象总结</a></p>
 		
 	</div>
 </div>

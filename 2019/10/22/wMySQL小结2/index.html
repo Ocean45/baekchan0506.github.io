@@ -4,7 +4,7 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
         
-        <title>Hexo</title>
+        <title>wMySQL小结2 | Hexo</title>
         
         <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
         
@@ -342,71 +342,47 @@ function dismissSearchResultModal() {
 </div>
 <div class="section" id="Post">
 	<div class="section_content">
-		<p class="breadcrumb"><a href="/">Q&amp;A</a> / no-title</p>
+		<p class="breadcrumb"><a href="/">Q&amp;A</a> / wMySQL小结2</p>
 		<div class="page_content mdcss">
-			<h1 id="MySQL小结"><a href="#MySQL小结" class="headerlink" title="MySQL小结"></a>MySQL小结</h1><h3 id="1-数据库的操作"><a href="#1-数据库的操作" class="headerlink" title="1.数据库的操作"></a>1.数据库的操作</h3><p>(1)创建数据库</p>
-<p>CREATE DATABASE 数据库名;</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; CREATE DATABASE stu;</span><br><span class="line">Query OK, 1 row affected</span><br></pre></td></tr></table></figure>
+			<h2 id="数据的增删改查"><a href="#数据的增删改查" class="headerlink" title="数据的增删改查"></a>数据的增删改查</h2><h3 id="1-数据插入"><a href="#1-数据插入" class="headerlink" title="1.数据插入"></a>1.数据插入</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">insert 表名(字段1,字段2...)values (值1,值2...);</span><br><span class="line">//精简模式</span><br><span class="line">insert 表名 values(值1,值2...);</span><br><span class="line">//一次插入多行</span><br><span class="line">insert into 表名(字段1,字段2...)values(值1,值2...),(值1,值2...)...;</span><br></pre></td></tr></table></figure>
 
-<p>(2)进入数据库</p>
-<p>USE 数据库名;</p>
-<p>只有先进入数据库，才能进行下面的操作</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; USE stu;</span><br><span class="line">Database changed</span><br></pre></td></tr></table></figure>
+<h3 id="2-数据删除"><a href="#2-数据删除" class="headerlink" title="2.数据删除"></a>2.数据删除</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">delete from 表名 where 条件;</span><br></pre></td></tr></table></figure>
 
-<p>(3)删除数据库</p>
-<p>DROP DATABASE 数据库名;</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; DROP DATABASE stu;</span><br><span class="line">Query OK, 0 rows affected</span><br></pre></td></tr></table></figure>
+<p>有外键约束的先删除从表再删除主表</p>
+<p>清空表</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">truncate table 表名;</span><br></pre></td></tr></table></figure>
 
-<p>(4)创建数据表</p>
-<p>CREATE TABLE 表名(字段1 类型,字段2 类型……..);</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; CREATE TABLE student(id int(10),name varchar(20));</span><br><span class="line">Query OK, 0 rows affected</span><br></pre></td></tr></table></figure>
+<p>truncate 和 delete的区别</p>
+<p>（1）truncate将清空日志，数据不可恢复</p>
+<p>（2）truncate将重置自增列</p>
+<p>（3）truncate不可清空有外键约束的表</p>
+<h3 id="3-修改语句"><a href="#3-修改语句" class="headerlink" title="3.修改语句"></a>3.修改语句</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">update 表名 set 字段1=值1,字段2=值2,...where 条件;</span><br></pre></td></tr></table></figure>
 
-<p>(5)查询表的结构信息</p>
-<p>DESC 表名;</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; DESC student;</span><br><span class="line">+-------+-------------+------+-----+---------+-------+</span><br><span class="line">| Field | Type        | Null | Key | Default | Extra |</span><br><span class="line">+-------+-------------+------+-----+---------+-------+</span><br><span class="line">| id    | int(10)     | YES  |     | NULL    |       |</span><br><span class="line">| name  | varchar(20) | YES  |     | NULL    |       |</span><br><span class="line">+-------+-------------+------+-----+---------+-------+</span><br><span class="line">2 rows in set</span><br></pre></td></tr></table></figure>
+<h3 id="4-查询语句"><a href="#4-查询语句" class="headerlink" title="4.查询语句"></a>4.查询语句</h3><p>查询所有语句</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select * from 表名;</span><br></pre></td></tr></table></figure>
 
-<p>(6)查询表的创建信息</p>
-<p>SHOW CREATE TABLE 表名;</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; SHOW CREATE TABLE student;</span><br><span class="line">+---------+---------------------------------------------------------------------------------------------------------------------------+</span><br><span class="line">| Table   | Create Table                                                                                                              |</span><br><span class="line">+---------+---------------------------------------------------------------------------------------------------------------------------+</span><br><span class="line">| student | CREATE TABLE `student` (</span><br><span class="line">  `id` int(10) DEFAULT NULL,</span><br><span class="line">  `name` varchar(20) DEFAULT NULL</span><br><span class="line">) ENGINE=MyISAM DEFAULT CHARSET=utf8 |</span><br><span class="line">+---------+---------------------------------------------------------------------------------------------------------------------------+</span><br><span class="line">1 row in set</span><br></pre></td></tr></table></figure>
+<p>条件查询</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">select 字段1,字段2...from 表名 where 条件;</span><br><span class="line">order by 字段1,字段2...limit 数字1,数字2;</span><br></pre></td></tr></table></figure>
 
-<p>(7)删除表</p>
-<p>DROP TABLE 表名;</p>
-<h3 id="2-修改表结构"><a href="#2-修改表结构" class="headerlink" title="2.修改表结构"></a>2.修改表结构</h3><p>(1)修改表名</p>
-<p>ALTER TABLE 旧表名 RENAME 新表名;</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; ALTER TABLE student RENAME studentinfo;</span><br><span class="line">Query OK, 0 rows affected</span><br></pre></td></tr></table></figure>
+<p>使用distinct 关键词，查询不重复的记录</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select distinct 字段名 from 表名;</span><br></pre></td></tr></table></figure>
 
-<p>(2)修改数据类型</p>
-<p>ALTER TABLE 表名 MODIFY 字段名 新类型;</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; ALTER TABLE studentinfo MODIFY id varchar(25);</span><br><span class="line">Query OK, 0 rows affected</span><br><span class="line">Records: 0  Duplicates: 0  Warnings: 0</span><br></pre></td></tr></table></figure>
+<p>重命名字段</p>
+<p>（1）使用as 关键词，进行字段重命名，都是临时的重命名，只对本次有效</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select stuname as 姓名,nation as 民族，class as 班级 from 表名;</span><br></pre></td></tr></table></figure>
 
-<p>(3)修改字段名</p>
-<p>ALTER TABLE 表名 CHANGE 旧字段名 新字段名 新数据类型;</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; ALTER TABLE studentinfo CHANGE id stuID varchar(25);</span><br><span class="line">Query OK, 0 rows affected</span><br><span class="line">Records: 0  Duplicates: 0  Warnings: 0</span><br></pre></td></tr></table></figure>
+<p>（2）永久性重命名字段</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">alter table 表名 change 旧字段名 新字段名 字段类型;</span><br></pre></td></tr></table></figure>
 
-<p>(4)删除字段</p>
-<p>ALTER TABLE 表名 DROP 字段名;</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; ALTER TABLE studentinfo DROP stuID;</span><br><span class="line">Query OK, 0 rows affected</span><br><span class="line">Records: 0  Duplicates: 0  Warnings: 0</span><br></pre></td></tr></table></figure>
-
-<p>(5)添加字段</p>
-<p>ALTER TABLE 表名 ADD 新字段名 新字段类型;</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; ALTER TABLE studentinfo ADD id varchar(40);</span><br><span class="line">Query OK, 0 rows affected</span><br><span class="line">Records: 0  Duplicates: 0  Warnings: 0</span><br></pre></td></tr></table></figure>
-
-<h3 id="3-数据约束"><a href="#3-数据约束" class="headerlink" title="3.数据约束"></a>3.数据约束</h3><p>(1)数据约束</p>
-<p>主键，外键，非空，默认，唯一</p>
-<p>(2)主键</p>
-<p>PRIMARY KEY 写在字段类型后面</p>
-<p>主键特征：非空且唯一</p>
-<p>(3)主键自增</p>
-<p>AUTO_INCREMENT 写在字段类型后面主键之前</p>
-<p>(4)外键</p>
-<p>从表的外键，必须在主表的主键中出现，写在创建语句的最后面</p>
-<p>FOREIGN KEY (字段名) REFERENCES 主表名 (字段名)；</p>
-<p>(5)非空约束</p>
-<p>NOT NULL 写在字段类型后面</p>
-<p>(6)默认</p>
-<p>DEFAULT 默认值，如果默认值是字符的需要将字符加单引号</p>
-<p>(7)唯一</p>
-<p>UNIQUE 写在字段类型后面</p>
+<h3 id="5-模糊查询"><a href="#5-模糊查询" class="headerlink" title="5.模糊查询"></a>5.模糊查询</h3><p>%表示任意长度的字符，0也是任意长度</p>
+<p>_表示一个字符</p>
+<p>聚合函数</p>
+<p>求和 sum(字段)</p>
+<p>平均数 avg(字段)</p>
+<p>最大 max(字段)</p>
+<p>最小 min(字段)</p>
+<p>个数 count(字段)或count(*)</p>
+<p>区别：count(字段)在字段为空的时候不会统计个数</p>
 
 		</div>
 	</div>
@@ -422,10 +398,8 @@ function dismissSearchResultModal() {
 	
 	<div class="section" id="Pagenation">
 		
-		<a href="/2019/10/22/wMySQL小结2/">Prev</a>
 		
-		
-		<a href="/2019/10/11/面向对象总结/">Next</a>
+		<a href="/2019/10/22/MySQL小结/">Next</a>
 		
 	</div>
 	
