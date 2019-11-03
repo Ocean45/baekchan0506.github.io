@@ -4,7 +4,7 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
         
-        <title>Hexo</title>
+        <title>jsp连接数据库 | Hexo</title>
         
         <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
         
@@ -28,10 +28,10 @@
     <ul class="clearfix">
       
       
-      <li class="active"> <a href="/">Home</a> </li>
+      <li class> <a href="/">Home</a> </li>
       
       
-      <li class> <a href="/archives">Archive</a> </li>
+      <li class="active dotted"> <a href="/archives">Archive</a> </li>
       
     </ul>
   </nav>
@@ -74,10 +74,10 @@
       <ul class="clearfix">
       
       
-      <li class="active"> <a href="/">Home</a> </li>
+      <li class> <a href="/">Home</a> </li>
       
       
-      <li class> <a href="/archives">Archive</a> </li>
+      <li class="active dotted"> <a href="/archives">Archive</a> </li>
       
       </ul>
     </nav>
@@ -364,25 +364,41 @@ function dismissSearchResultModal() {
 }
 </script>
 </div>
-<div class="section" id="PostList">
-	<h2 class="center">Latest List</h2>
-	<div class="post-list">
-		
-		<p class="post-title"><a href="/2019/11/03/jsp连接数据库/">1. jsp连接数据库</a></p>
-		
-		<p class="post-title"><a href="/2019/11/03/Android基本布局/">2. Android基本布局</a></p>
-		
-		<p class="post-title"><a href="/2019/10/22/wMySQL小结2/">3. wMySQL小结2</a></p>
-		
-		<p class="post-title"><a href="/2019/10/22/MySQL小结/">4. no-title</a></p>
-		
-		<p class="post-title"><a href="/2019/10/11/面向对象总结/">5. 面向对象总结</a></p>
-		
+<div class="section" id="Post">
+	<div class="section_content">
+		<p class="breadcrumb"><a href="/">Q&amp;A</a> / jsp连接数据库</p>
+		<div class="page_content mdcss">
+			<h2 id="jsp连接数据库的步骤"><a href="#jsp连接数据库的步骤" class="headerlink" title="jsp连接数据库的步骤"></a>jsp连接数据库的步骤</h2><h3 id="1-首先创建一个新的jsp文件和数据表"><a href="#1-首先创建一个新的jsp文件和数据表" class="headerlink" title="1.首先创建一个新的jsp文件和数据表"></a>1.首先创建一个新的jsp文件和数据表</h3><p>注意：这些步骤都是在部署好服务器的前提下做的，一般我们使用的都是Tomcat服务器</p>
+<h3 id="2-加载数据库驱动"><a href="#2-加载数据库驱动" class="headerlink" title="2.加载数据库驱动"></a>2.加载数据库驱动</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">Class.forName(<span class="string">"org.gjt.mm.mysql.Driver"</span>);  </span><br><span class="line"> out.print(<span class="string">"成功加载驱动"</span>);</span><br><span class="line"> String url=<span class="string">"jdbc:mysql://127.0.0.1:3306/test?user=root&amp;password=123567&amp;useSSL=false"</span>;</span><br><span class="line"><span class="comment">//myaql是数据库名</span></span><br><span class="line"><span class="comment">//3306是端口号</span></span><br><span class="line"><span class="comment">//user后面是用户名</span></span><br><span class="line"><span class="comment">//password是密码</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="3-获取数据库连接"><a href="#3-获取数据库连接" class="headerlink" title="3.获取数据库连接"></a>3.获取数据库连接</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"> Connection conn=DriverManager.getConnection(url);</span><br><span class="line"><span class="comment">//让java可以操作数据库</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="4-定义一个sql命令"><a href="#4-定义一个sql命令" class="headerlink" title="4.定义一个sql命令"></a>4.定义一个sql命令</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Statement stmt = <span class="keyword">null</span>;  </span><br><span class="line"> ResultSet rs = <span class="keyword">null</span>;</span><br></pre></td></tr></table></figure>
+
+<h3 id="5-查询语句"><a href="#5-查询语句" class="headerlink" title="5.查询语句"></a>5.查询语句</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">String sql = <span class="string">"SELECT * FROM student;"</span>;</span><br><span class="line"> <span class="comment">//student是你创建的表的名称   </span></span><br><span class="line"> stmt = conn.createStatement();  </span><br><span class="line"> rs = stmt.executeQuery(sql);  </span><br><span class="line"><span class="keyword">while</span>(rs.next())</span><br><span class="line">&#123;</span><br><span class="line">	 out.print(<span class="string">"&lt;br&gt;"</span>);</span><br><span class="line">	</span><br><span class="line">	out.println(rs.getInt(<span class="number">1</span>));</span><br><span class="line">	out.println(rs.getString(<span class="number">2</span>));</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="6-关闭数据库连接"><a href="#6-关闭数据库连接" class="headerlink" title="6.关闭数据库连接"></a>6.关闭数据库连接</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">stmt.close();</span><br><span class="line"> rs.close();</span><br><span class="line"> conn.close();</span><br><span class="line"><span class="comment">//关闭数据库，便于以后操作</span></span><br></pre></td></tr></table></figure>
+
+<p>就这样就可以连接到数据库了</p>
+
+		</div>
 	</div>
+
+	
+
+	
+	
 </div>
 
 	
 	
+	
+	<div class="section" id="Pagenation">
+		
+		
+		<a href="/2019/11/03/Android基本布局/">Next</a>
+		
+	</div>
 	
 
             <footer>
