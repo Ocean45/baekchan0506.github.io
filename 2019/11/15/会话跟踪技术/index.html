@@ -4,7 +4,7 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
         
-        <title>wMySQL小结2 | Hexo</title>
+        <title>会话跟踪技术 | Hexo</title>
         
         <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
         
@@ -918,47 +918,82 @@ function dismissSearchResultModal() {
 </div>
 <div class="section" id="Post">
 	<div class="section_content">
-		<p class="breadcrumb"><a href="/">Q&amp;A</a> / wMySQL小结2</p>
+		<p class="breadcrumb"><a href="/">Q&amp;A</a> / 会话跟踪技术</p>
 		<div class="page_content mdcss">
-			<h2 id="数据的增删改查"><a href="#数据的增删改查" class="headerlink" title="数据的增删改查"></a>数据的增删改查</h2><h3 id="1-数据插入"><a href="#1-数据插入" class="headerlink" title="1.数据插入"></a>1.数据插入</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">insert 表名(字段1,字段2...)values (值1,值2...);</span><br><span class="line">//精简模式</span><br><span class="line">insert 表名 values(值1,值2...);</span><br><span class="line">//一次插入多行</span><br><span class="line">insert into 表名(字段1,字段2...)values(值1,值2...),(值1,值2...)...;</span><br></pre></td></tr></table></figure>
+			<h3 id="会话跟踪技术"><a href="#会话跟踪技术" class="headerlink" title="会话跟踪技术"></a>会话跟踪技术</h3><h4 id="1-概念："><a href="#1-概念：" class="headerlink" title="1.概念："></a>1.概念：</h4><p>在JavaWeb中，客户向某一服务器发出第一个请求开始，会话就开始了，直到客户关闭了浏览器会话结束。</p>
+<p>在一个会话的多个请求中共享数据，这就是会话跟踪技术。</p>
+<h4 id="2-会话跟踪技术的使用"><a href="#2-会话跟踪技术的使用" class="headerlink" title="2.会话跟踪技术的使用"></a>2.会话跟踪技术的使用</h4><p>在HTTP协议中可以使用Cookie来完成会话跟踪。</p>
+<p>在JavaWeb中，使用session来完成会话跟踪，session底层依赖Cookie技术。</p>
+<h4 id="3-Cookie"><a href="#3-Cookie" class="headerlink" title="3.Cookie"></a>3.Cookie</h4><p>Cookie是HTTP协议制定的，Cookie就是一个键和一个值构成的，随着服务器端的响应发送给客户端浏览器。然后客户端浏览器会把Cookie保存起来，当下一次再访问服务器时把Cookie再发送给服务器。</p>
+<p>注意：Cookie是不能跨浏览器的；</p>
+<p>​            Cookie中不能存在中文。</p>
+<h5 id="1-HTTP的Cookie规范"><a href="#1-HTTP的Cookie规范" class="headerlink" title="(1)HTTP的Cookie规范"></a>(1)HTTP的Cookie规范</h5><p>1个Cookie的大小不超过4KB;</p>
+<p>1个服务器最多向1个浏览器保存20个Cookie;</p>
+<p>1个浏览器最多可以保存300个Cookie。</p>
+<h5 id="2-Cookie的用途"><a href="#2-Cookie的用途" class="headerlink" title="(2).Cookie的用途"></a>(2).Cookie的用途</h5><p>服务器使用Cookie来跟踪客户端状态;</p>
+<p>保存购物车;</p>
+<p>显示上次登录名;</p>
+<h5 id="3-Cookie与HTTP头"><a href="#3-Cookie与HTTP头" class="headerlink" title="(3).Cookie与HTTP头"></a>(3).Cookie与HTTP头</h5><p> Cookie是通过HTTP请求和响应头在客户端和服务器端传递</p>
+<p> Cookie：<br>             请求头，客户端发送给服务器端。<br>             格式：Cookie: a=A; b=B; c=C。即多个Cookie用分号离开；</p>
+<p> Set-Cookie<br>             响应头，服务器端发送给客户端<br>             一个Cookie对象一个Set-Cookie：<br>             Set-Cookie: a=A<br>             Set-Cookie: b=B<br>             Set-Cookie: c=C</p>
+<h5 id="4-Cookie的覆盖"><a href="#4-Cookie的覆盖" class="headerlink" title="(4).Cookie的覆盖"></a>(4).Cookie的覆盖</h5><p> 如果服务器端发送重复的Cookie那么会覆盖原有的Cookie。</p>
+<h5 id="5-JavaWeb中使用Cookie"><a href="#5-JavaWeb中使用Cookie" class="headerlink" title="(5).JavaWeb中使用Cookie"></a>(5).JavaWeb中使用Cookie</h5><pre><code>原始方法 :</code></pre><p>​                    使用response发送Set-Cookie响应头;</p>
+<p>​                    使用request获取Cookie请求头;</p>
+<p>​    便捷方法:</p>
+<p>​                    使用response.addCookie()方法向浏览器保存Cookie;</p>
+<p>​                    使用request.getCookies()方法获取浏览器归还的Cookie;</p>
+<p>代码：<br> 一个jsp保存cookie, a.jsp<br> 另一个jsp获取浏览器归还的cookie！ b.jsp</p>
+<p>例：</p>
+<p>a.jsp</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">&lt;%@ page contentType=<span class="string">"text/html;charset=UTF-8"</span> language=<span class="string">"java"</span> %&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">    &lt;title&gt;Title&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">&lt;h1&gt;保存Cookie&lt;/h1&gt;</span><br><span class="line">&lt;%</span><br><span class="line">    Cookie cookie1 = <span class="keyword">new</span> Cookie(<span class="string">"aaa"</span>, <span class="string">"AAA"</span>);</span><br><span class="line">    response.addCookie(cookie1);</span><br><span class="line"></span><br><span class="line">    Cookie cookie2 = <span class="keyword">new</span> Cookie(<span class="string">"bbb"</span>, <span class="string">"BBB"</span>);</span><br><span class="line">    response.addCookie(cookie2);</span><br><span class="line">%&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
 
-<h3 id="2-数据删除"><a href="#2-数据删除" class="headerlink" title="2.数据删除"></a>2.数据删除</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">delete from 表名 where 条件;</span><br></pre></td></tr></table></figure>
+<p>b.jsp</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">&lt;%@ page contentType=<span class="string">"text/html;charset=UTF-8"</span> language=<span class="string">"java"</span> %&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">    &lt;title&gt;Title&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">&lt;h1&gt;获取Cookie&lt;/h1&gt;</span><br><span class="line">&lt;%</span><br><span class="line">    Cookie[] cookies = request.getCookies();</span><br><span class="line">    <span class="keyword">if</span>(cookies != <span class="keyword">null</span>) &#123;</span><br><span class="line">        <span class="keyword">for</span>(Cookie c : cookies) &#123;</span><br><span class="line">            out.print(c.getName() + <span class="string">"="</span> + c.getValue() + <span class="string">"&lt;br/&gt;"</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">%&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
 
-<p>有外键约束的先删除从表再删除主表</p>
-<p>清空表</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">truncate table 表名;</span><br></pre></td></tr></table></figure>
+<h5 id="6-Cookie属性"><a href="#6-Cookie属性" class="headerlink" title="(6)Cookie属性"></a>(6)Cookie属性</h5><table>
+<thead>
+<tr>
+<th align="left">属性项</th>
+<th align="left">属性项介绍</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">NAME=VALUE</td>
+<td align="left">键值对，可以设置要保存的 Key/Value，注意这里的 NAME 不能和其他属性项的名字一样</td>
+</tr>
+<tr>
+<td align="left">Expires</td>
+<td align="left">过期时间，在设置的某个时间点后该 Cookie 就会失效</td>
+</tr>
+<tr>
+<td align="left">Domain</td>
+<td align="left">生成该 Cookie 的域名，如 domain=”<a href="http://www.baidu.com/" target="_blank" rel="noopener">www.baidu.com</a>“</td>
+</tr>
+<tr>
+<td align="left">Path</td>
+<td align="left">该 Cookie 是在当前的哪个路径下生成的，如 path=/wp-admin/</td>
+</tr>
+<tr>
+<td align="left">Secure</td>
+<td align="left">如果设置了这个属性，那么只会在 SSH 连接时才会回传该 Cookie</td>
+</tr>
+</tbody></table>
+<h4 id="4-Session"><a href="#4-Session" class="headerlink" title="4.Session"></a>4.Session</h4><p>在客户记录的其实是一个sessionid，在服务器端记录的时一个key-value形式的数据结构，这里的key是指sessionid，value就代表session的详细内容。用户在做http请求时，总是把sessionid传递给服务器，然后服务器根据这个sessionid来查询session的内容。</p>
+<h5 id="1-Session的会话范围"><a href="#1-Session的会话范围" class="headerlink" title="(1)Session的会话范围"></a>(1)Session的会话范围</h5><p>会话范围是某个用户从首次访问服务器开始，到该用户关闭浏览器结束。</p>
+<h5 id="2-获取HttpSession对象"><a href="#2-获取HttpSession对象" class="headerlink" title="(2).获取HttpSession对象"></a>(2).获取HttpSession对象</h5><p>​        1)Servlet中获取HttpSession对象<br>HttpSession session = request.getSesssion()：如果当前会话已经有了session对象那么直接返回，如果当前会话还不存在会话，那么创建session并返回；</p>
+<p>​        2)jsp中获取HttpSession对象<br> session是jsp内置对象之下，不用创建就可以直接使用。</p>
+<h5 id="3-session域相关方法"><a href="#3-session域相关方法" class="headerlink" title="(3)session域相关方法"></a>(3)session域相关方法</h5><p>1)void setAttribute(String name, Object value)：<br> 用来存储一个对象，也可以称之为存储一个域属性。</p>
+<p>2)Object getAttribute(String name)：<br> 用来获取session中的数据，当前在获取之前需要先去存储才行。</p>
+<p>3)void removeAttribute(String name)：<br> 用来移除HttpSession中的域属性，如果参数name指定的域属性不存在，那么本方法什么都不做。</p>
+<h5 id="4-登录案例"><a href="#4-登录案例" class="headerlink" title="(4)登录案例"></a>(4)登录案例</h5><p> login.jsp<br> 提供登录表单<br> 表单指向LoginServlet</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line">&lt;%@ page contentType=<span class="string">"text/html;charset=UTF-8"</span> language=<span class="string">"java"</span> %&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">    &lt;title&gt;登录页面&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line"></span><br><span class="line">&lt;%-- 登录表单及错误信息显示 --%&gt;</span><br><span class="line"></span><br><span class="line">&lt;h1&gt;登录&lt;/h1&gt;</span><br><span class="line">&lt;%-- 附加功能 --%&gt;</span><br><span class="line">&lt;%</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 读取名为uname的Cookie!</span></span><br><span class="line"><span class="comment">     * 如果为空显示：""</span></span><br><span class="line"><span class="comment">     * 如果不为空显示：Cookie的值</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    String uname = <span class="string">""</span>;</span><br><span class="line">    Cookie[] cookies = request.getCookies();<span class="comment">//获取请求中所有的cookie</span></span><br><span class="line">    <span class="keyword">if</span> (cookies != <span class="keyword">null</span>)&#123;<span class="comment">// 如果存在cookie</span></span><br><span class="line">        <span class="keyword">for</span> (Cookie cookie : cookies)&#123;<span class="comment">//循环遍历所有的cookie</span></span><br><span class="line">            <span class="keyword">if</span> (<span class="string">"uname"</span>.equals(cookie.getName()))&#123;<span class="comment">//查找名为uname的cookie</span></span><br><span class="line">                uname = cookie.getValue();<span class="comment">//获取这个cookie的值，给uname这个变量</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">%&gt;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&lt;%</span><br><span class="line">    String message = <span class="string">""</span>;</span><br><span class="line">    String msg = (String)request.getAttribute(<span class="string">"msg"</span>);<span class="comment">//获取request域中的名为msg的属性</span></span><br><span class="line">    <span class="keyword">if</span> (msg != <span class="keyword">null</span>)&#123;</span><br><span class="line">        message = msg;</span><br><span class="line">    &#125;</span><br><span class="line">%&gt;</span><br><span class="line"></span><br><span class="line">&lt;p style="color: brown"&gt;&lt;b&gt;&lt;%=message %&gt;&lt;/b&gt;&lt;/p&gt;</span><br><span class="line">&lt;%-- action中<span class="string">"/项目名/&lt;url-pattern&gt;"</span> --%&gt;</span><br><span class="line">&lt;form action=<span class="string">"/visitCount/LoginServlet"</span> method=<span class="string">"post"</span>&gt;</span><br><span class="line">    &lt;%-- 把cookie中的用户名显示到用户名文本框中 --%&gt;</span><br><span class="line">    用户名：&lt;input type=<span class="string">"text"</span> name=<span class="string">"username"</span> value=<span class="string">"&lt;%=uname %&gt;"</span>&gt;</span><br><span class="line">    密码：&lt;input type=<span class="string">"password"</span> name=<span class="string">"pwd"</span>&gt;</span><br><span class="line">&lt;input type=<span class="string">"submit"</span> value=<span class="string">"登录"</span>&gt;</span><br><span class="line">&lt;/form&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
 
-<p>truncate 和 delete的区别</p>
-<p>（1）truncate将清空日志，数据不可恢复</p>
-<p>（2）truncate将重置自增列</p>
-<p>（3）truncate不可清空有外键约束的表</p>
-<h3 id="3-修改语句"><a href="#3-修改语句" class="headerlink" title="3.修改语句"></a>3.修改语句</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">update 表名 set 字段1=值1,字段2=值2,...where 条件;</span><br></pre></td></tr></table></figure>
+<p>LoginServlet<br> 1）获取表单数据<br> 2）效验用户名和密码是否正确<br> 3）成功：保存用户信息到session中，重定向到success1.jsp<br> 4）失败：保存错误信息到request域，转发回login.jsp</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> javax.servlet.RequestDispatcher;</span><br><span class="line"><span class="keyword">import</span> javax.servlet.ServletException;</span><br><span class="line"><span class="keyword">import</span> javax.servlet.annotation.WebServlet;</span><br><span class="line"><span class="keyword">import</span> javax.servlet.http.*;</span><br><span class="line"><span class="keyword">import</span> java.io.IOException;</span><br><span class="line"></span><br><span class="line"><span class="meta">@WebServlet</span>(name = <span class="string">"LoginServlet"</span>)</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">LoginServlet</span> <span class="keyword">extends</span> <span class="title">HttpServlet</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">doPost</span><span class="params">(HttpServletRequest request, HttpServletResponse response)</span> <span class="keyword">throws</span> ServletException, IOException </span>&#123;</span><br><span class="line"></span><br><span class="line">        <span class="comment">/**</span></span><br><span class="line"><span class="comment">         * 1.获取表单数据</span></span><br><span class="line"><span class="comment">         */</span></span><br><span class="line">        <span class="comment">//处理中文</span></span><br><span class="line">        request.setCharacterEncoding(<span class="string">"utf-8"</span>);</span><br><span class="line">        <span class="comment">//获取</span></span><br><span class="line">        String username = request.getParameter(<span class="string">"username"</span>);</span><br><span class="line">        String pwd =  request.getParameter(<span class="string">"pwd"</span>);</span><br><span class="line">        <span class="comment">/**</span></span><br><span class="line"><span class="comment">         * 2.验证用户名和密码是否正确</span></span><br><span class="line"><span class="comment">         */</span></span><br><span class="line">        <span class="keyword">if</span> (!<span class="string">"admin"</span>.equalsIgnoreCase(username))&#123;</span><br><span class="line">            <span class="comment">//登录成功</span></span><br><span class="line">            <span class="comment">/**</span></span><br><span class="line"><span class="comment">             * 附加功能：把用户名保存到cookie中，发送给客户端浏览器</span></span><br><span class="line"><span class="comment">             * 再次打开login.jsp时，login.jsp中会读取request中的cookie，把它显示到用户名文本框中</span></span><br><span class="line"><span class="comment">             */</span></span><br><span class="line">            Cookie cookie = <span class="keyword">new</span> Cookie(<span class="string">"uname"</span>,username);<span class="comment">//创建Cookie</span></span><br><span class="line">            cookie.setMaxAge(<span class="number">60</span>*<span class="number">60</span>*<span class="number">24</span>);<span class="comment">//设置Cookie的时长为一天</span></span><br><span class="line">            response.addCookie(cookie);<span class="comment">//保存cookie</span></span><br><span class="line"></span><br><span class="line">            <span class="comment">/**</span></span><br><span class="line"><span class="comment">             * a.保存用户信息到session中</span></span><br><span class="line"><span class="comment">             * b.重定向到success1.jsp</span></span><br><span class="line"><span class="comment">             */</span></span><br><span class="line">            HttpSession session = request.getSession();<span class="comment">//获取seession</span></span><br><span class="line">            session.setAttribute(<span class="string">"usuername"</span>,username);<span class="comment">//向session域中保存用户名</span></span><br><span class="line">            response.sendRedirect(<span class="string">"/visitCount/success1.jsp"</span>);</span><br><span class="line">        &#125;<span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="comment">//登录失败</span></span><br><span class="line">            <span class="comment">/**</span></span><br><span class="line"><span class="comment">             * a.保存错误信息到request域中</span></span><br><span class="line"><span class="comment">             * b.转发到login.jsp</span></span><br><span class="line"><span class="comment">             */</span></span><br><span class="line">            request.setAttribute(<span class="string">"msg"</span>,<span class="string">"用户名或密码错误"</span>);</span><br><span class="line">            RequestDispatcher requestDispatcher = request.getRequestDispatcher(<span class="string">"/login.jsp"</span>);<span class="comment">//得到转发器</span></span><br><span class="line">            requestDispatcher.forward(request,response);<span class="comment">//转发</span></span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<h3 id="4-查询语句"><a href="#4-查询语句" class="headerlink" title="4.查询语句"></a>4.查询语句</h3><p>查询所有语句</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select * from 表名;</span><br></pre></td></tr></table></figure>
+<p>success1.jsp（登录用户可以访问）<br> 1）从session中获取用户信息，如果存在说明已经登录，显示用户名<br> 2）如果不存在，向request域保存错误信息，转发到login.jsp</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">&lt;%@ page contentType=<span class="string">"text/html;charset=UTF-8"</span> language=<span class="string">"java"</span> %&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">    &lt;title&gt;Title&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">&lt;h1&gt;登录成功&lt;/h1&gt;</span><br><span class="line">&lt;%-- session拦截未登录的用户 --%&gt;</span><br><span class="line">&lt;%</span><br><span class="line">    String username = (String)session.getAttribute(<span class="string">"username"</span>);</span><br><span class="line">    <span class="keyword">if</span> (username == <span class="keyword">null</span>)&#123;</span><br><span class="line">        <span class="comment">/**</span></span><br><span class="line"><span class="comment">         * 向request域中发送错误信息，转发到login.jsp</span></span><br><span class="line"><span class="comment">         */</span></span><br><span class="line">        request.setAttribute(<span class="string">"msg"</span>,<span class="string">"请登录"</span>);</span><br><span class="line">        request.getRequestDispatcher(<span class="string">"login.jsp"</span>).forward(request,response);</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line">%&gt;</span><br><span class="line">欢迎&lt;%=username %&gt;</span><br><span class="line"></span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
 
-<p>条件查询</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">select 字段1,字段2...from 表名 where 条件;</span><br><span class="line">order by 字段1,字段2...limit 数字1,数字2;</span><br></pre></td></tr></table></figure>
-
-<p>使用distinct 关键词，查询不重复的记录</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select distinct 字段名 from 表名;</span><br></pre></td></tr></table></figure>
-
-<p>重命名字段</p>
-<p>（1）使用as 关键词，进行字段重命名，都是临时的重命名，只对本次有效</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select stuname as 姓名,nation as 民族，class as 班级 from 表名;</span><br></pre></td></tr></table></figure>
-
-<p>（2）永久性重命名字段</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">alter table 表名 change 旧字段名 新字段名 字段类型;</span><br></pre></td></tr></table></figure>
-
-<h3 id="5-模糊查询"><a href="#5-模糊查询" class="headerlink" title="5.模糊查询"></a>5.模糊查询</h3><p>%表示任意长度的字符，0也是任意长度</p>
-<p>_表示一个字符</p>
-<p>聚合函数</p>
-<p>求和 sum(字段)</p>
-<p>平均数 avg(字段)</p>
-<p>最大 max(字段)</p>
-<p>最小 min(字段)</p>
-<p>个数 count(字段)或count(*)</p>
-<p>区别：count(字段)在字段为空的时候不会统计个数</p>
 
 		</div>
 	</div>
@@ -974,10 +1009,10 @@ function dismissSearchResultModal() {
 	
 	<div class="section" id="Pagenation">
 		
-		<a href="/2019/11/03/Android基本布局/">Prev</a>
+		<a href="/2019/11/20/用servlet实现登录并连接数据库/">Prev</a>
 		
 		
-		<a href="/2019/10/22/MySQL小结/">Next</a>
+		<a href="/2019/11/12/js前部分总结/">Next</a>
 		
 	</div>
 	
